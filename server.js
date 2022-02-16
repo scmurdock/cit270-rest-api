@@ -1,4 +1,5 @@
 const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -21,4 +22,9 @@ app.post('/login', (req,res) =>{
     }
 });
 
-app.listen(port, ()=>{});
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app).listen(port, () => {
+    console.log('Listening...')
+  })
