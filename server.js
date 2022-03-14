@@ -3,9 +3,11 @@ const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const port = 3000;
+const port = 4443;
 
 const app = express();
+
+app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
@@ -24,7 +26,8 @@ app.post('/login', (req,res) =>{
 
 https.createServer({
     key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
+    cert: fs.readFileSync('server.cert'),
+    passphrase:'P@ssw0rd'
   }, app).listen(port, () => {
     console.log('Listening...')
   })
